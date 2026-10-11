@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Acid Mix — мій плейлист</title>
+  <meta name="description" content="Практична робота №3: CSS Grid, мультимедіа та CSS-анімації">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- Кореневий Grid-контейнер: header / cover / info / tracks / footer / player -->
+<div class="page">
+
+  <header class="page__header">
+    <a class="logo" href="#" aria-label="Acid Mix — на головну">
+      <!-- Вбудований SVG-логотип -->
+      <svg class="logo__icon" viewBox="0 0 48 48" width="40" height="40" role="img" aria-labelledby="logo-title">
+        <title id="logo-title">Логотип Acid Mix</title>
+        <circle cx="24" cy="24" r="22" fill="none" stroke="currentColor" stroke-width="2"/>
+        <path d="M6 30 Q15 18 24 30 T42 30" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+        <circle cx="24" cy="15" r="5" fill="currentColor"/>
+      </svg>
+      <span class="logo__text">Acid Mix</span>
+    </a>
+    <nav aria-label="Основна навігація">
+      <ul class="nav">
+        <li><a href="#info">Про плейлист</a></li>
+        <li><a href="#tracks">Трек-лист</a></li>
+        <li><a href="#footer">Контакти</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="page__main">
+
+    <section class="cover" aria-label="Обкладинка плейлиста">
+      <!-- Адаптивне зображення: WebP + srcset + sizes + lazy loading -->
+      <img
+        class="cover__img"
+        src="cover-800.webp"
+        srcset="cover-400.webp 400w,
+                cover-800.webp 800w,
+                cover-1200.webp 1200w"
+        sizes="(max-width: 700px) 90vw, 360px"
+        width="800" height="800"
+        loading="lazy"
+        alt="Обкладинка плейлиста Acid Mix: зелений градієнт із концентричними колами та кислотно-жовтим диском у центрі">
+    </section>
+
+    <section class="info" id="info" aria-labelledby="album-title">
+      <p class="info__badge">Плейлист</p>
+      <h1 id="album-title">Acid Mix</h1>
+      <p class="info__artist">Тут: <strong>Athens, The Prodigy, esdeekid</strong></p>
+      <p class="info__text">
+        Мікс із треків, які зараз слухаю. Трохи важкої електроніки і трохи реп-агресії.
+      </p>
+      <a class="btn btn--pulse" href="#player">
+        <!-- Іконка Play (SVG) -->
+        <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false">
+          <path d="M8 5v14l11-7z" fill="currentColor"/>
+        </svg>
+        Слухати зараз
+      </a>
+    </section>
+
+    <section class="tracks" id="tracks" aria-labelledby="tracks-title">
+      <h2 id="tracks-title">Трек-лист</h2>
+      <div class="table-wrap">
+        <table class="tracklist">
+          <caption class="visually-hidden">Список треків плейлиста Acid Mix</caption>
+          <thead>
+            <tr>
+              <th scope="col">№</th>
+              <th scope="col">Виконавець</th>
+              <th scope="col">Назва</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>1</td><td>Athens</td><td>Deadmarried</td></tr>
+            <tr><td>2</td><td>The Prodigy</td><td>Breathe</td></tr>
+            <tr><td>3</td><td>The Prodigy</td><td>Diesel Power</td></tr>
+            <tr><td>4</td><td>esdeekid</td><td>Phantom</td></tr>
+            <tr><td>5</td><td>esdeekid</td><td>4 Raws</td></tr>
+          </tbody>
+          <tfoot>
+            <!-- colspan: об'єднання клітинок -->
+            <tr>
+              <th scope="row" colspan="2">Всього треків</th>
+              <td>5</td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="page__footer" id="footer">
+    <ul class="social">
+      <li>
+        <a href="#" aria-label="Подобається">
+          <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" focusable="false">
+            <path d="M12 21s-7-4.6-9.3-9A5.4 5.4 0 0 1 12 6.4 5.4 5.4 0 0 1 21.3 12C19 16.4 12 21 12 21z" fill="currentColor"/>
+          </svg>
+        </a>
+      </li>
+      <li>
+        <a href="#" aria-label="Поділитися">
+          <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" focusable="false">
+            <path d="M18 16a3 3 0 0 0-2.1.9l-7-4a3 3 0 0 0 0-1.8l7-4A3 3 0 1 0 15 5a3 3 0 0 0 .1.8l-7 4a3 3 0 1 0 0 4.4l7.1 4.1A3 3 0 1 0 18 16z" fill="currentColor"/>
+          </svg>
+        </a>
+      </li>
+    </ul>
+  </footer>
+
+  <!-- Глобальний аудіоплеєр унизу сторінки -->
+  <section class="player" id="player" aria-label="Аудіоплеєр">
+    <div class="player__eq" aria-hidden="true">
+      <span></span><span></span><span></span><span></span>
+    </div>
+    <p class="player__title">Зараз грає: <strong>Demo — Acid Mix</strong></p>
+    <audio class="player__audio" controls preload="metadata">
+      <source src="demo.mp3" type="audio/mpeg">
+      <source src="demo.ogg" type="audio/ogg">
+      Ваш браузер не підтримує елемент <code>audio</code>.
+    </audio>
+  </section>
+
+</div>
+
+</body>
+</html>

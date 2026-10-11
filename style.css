@@ -1,0 +1,301 @@
+/* ===== Змінні та база ===== */
+:root {
+  --bg: #0a1208;
+  --surface: #132010;
+  --surface-2: #1f3a12;
+  --text: #eaffd6;
+  --muted: #94bd6e;
+  --accent: #b6ff00;
+  --accent-2: #00ff9d;
+  --radius: 14px;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.55;
+}
+
+a { color: inherit; }
+ul { list-style: none; }
+
+.visually-hidden {
+  position: absolute; width: 1px; height: 1px;
+  overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap;
+}
+
+/* ===== 1. ГОЛОВНА GRID-СІТКА СТОРІНКИ =====
+   Колонки: 1 гнучка. Рядки: header / main / footer / player.
+   Іменовані області (grid-template-areas) + gap. */
+.page {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto 1fr auto auto;
+  grid-template-areas:
+    "header"
+    "main"
+    "footer"
+    "player";
+  gap: 24px;
+  min-height: 100vh;
+  max-width: 1100px;
+  margin-inline: auto;
+  padding: 24px 20px 0;
+}
+
+.page__header { grid-area: header; }
+.page__main   { grid-area: main; }
+.page__footer { grid-area: footer; }
+.player       { grid-area: player; }
+
+/* ===== Header ===== */
+.page__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  color: var(--accent);
+  font-weight: 700;
+  font-size: 1.2rem;
+}
+
+.logo__icon { transition: transform .6s ease; }
+.logo:hover .logo__icon { transform: rotate(360deg); }
+
+.nav { display: flex; gap: 8px; }
+
+.nav a {
+  display: block;
+  padding: 8px 14px;
+  border-radius: 999px;
+  text-decoration: none;
+  color: var(--muted);
+  /* 2. TRANSITION: плавна зміна фону та кольору */
+  transition: background-color .3s ease, color .3s ease;
+}
+.nav a:hover,
+.nav a:focus-visible { background: var(--surface-2); color: var(--text); }
+
+/* ===== 2. ВКЛАДЕНА GRID-СІТКА ГОЛОВНОГО БЛОКУ =====
+   Двовимірна сітка: ліворуч обкладинка + інфо, праворуч/нижче таблиця.
+   Використано grid-column / grid-row для точного позиціонування. */
+.page__main {
+  display: grid;
+  grid-template-columns: minmax(260px, 360px) 1fr;
+  grid-template-rows: auto auto;
+  gap: 32px;
+  align-items: start;
+}
+
+.cover  { grid-column: 1; grid-row: 1 / span 2; }
+.info   { grid-column: 2; grid-row: 1; }
+.tracks { grid-column: 2; grid-row: 2; }
+
+/* ===== Обкладинка ===== */
+.cover__img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: var(--radius);
+  border: 3px solid var(--accent);
+  box-shadow: 8px 8px 0 var(--accent-2);
+  /* TRANSITION: масштаб + тінь при наведенні */
+  transition: transform .4s ease, box-shadow .4s ease;
+  /* ANIMATION: плавна поява */
+  animation: fade-in .9s ease both;
+}
+.cover__img:hover {
+  transform: rotate(-2deg) scale(1.03);
+  box-shadow: 12px 12px 0 var(--accent-2);
+}
+
+/* ===== Інформація ===== */
+.info { animation: fade-in .9s .15s ease both; }
+
+.info__badge {
+  transform: rotate(-3deg);
+  display: inline-block;
+  padding: 4px 12px;
+  margin-bottom: 12px;
+  border-radius: 999px;
+  background: var(--surface-2);
+  color: var(--accent);
+  font-size: .85rem;
+}
+
+h1, h2, .logo { font-family: "Courier New", Courier, monospace; }
+h1 { text-transform: uppercase; font-size: clamp(2rem, 5vw, 3.2rem); line-height: 1.1; }
+h2 { font-size: 1.5rem; margin-bottom: 12px; }
+.info__artist { margin-top: 8px; color: var(--muted); }
+.info__text { margin: 16px 0 24px; max-width: 55ch; }
+
+/* ===== Кнопка: transition + @keyframes pulse ===== */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 24px;
+  border-radius: 999px;
+  background: var(--accent);
+  color: #0a1208;
+  font-weight: 700;
+  text-decoration: none;
+  transition: background-color .3s ease, transform .3s ease, color .3s ease;
+}
+.btn:hover,
+.btn:focus-visible {
+  background: var(--accent-2);
+  color: #0a1208;
+  transform: translateY(-3px) scale(1.05);
+}
+
+/* Автономна анімація пульсації */
+.btn--pulse { animation: pulse 2s ease-in-out infinite; }
+
+@keyframes pulse {
+  0%   { box-shadow: 0 0 0 0 rgba(182, 255, 0, .6); }
+  70%  { box-shadow: 0 0 0 16px rgba(182, 255, 0, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(182, 255, 0, 0); }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ===== Таблиця трек-листа ===== */
+.tracks { animation: fade-in .9s .3s ease both; }
+
+.table-wrap { overflow-x: auto; border-radius: var(--radius); }
+
+.tracklist {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--surface);
+}
+
+.tracklist th,
+.tracklist td { padding: 12px 16px; text-align: left; }
+
+.tracklist thead th {
+  background: var(--surface-2);
+  color: var(--accent);
+  font-size: .9rem;
+  text-transform: uppercase;
+  letter-spacing: .05em;
+}
+
+.tracklist tbody tr {
+  border-bottom: 1px solid rgba(255, 255, 255, .06);
+  transition: background-color .25s ease, transform .25s ease;
+}
+.tracklist tbody tr:hover {
+  background: var(--surface-2);
+  transform: translateX(6px);
+}
+
+.tracklist tfoot th,
+.tracklist tfoot td { color: var(--muted); font-weight: 600; }
+
+/* ===== Footer ===== */
+.page__footer {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 16px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(255, 255, 255, .1);
+  color: var(--muted);
+  font-size: .9rem;
+}
+
+.social { display: flex; gap: 12px; }
+.social a {
+  display: grid;
+  place-items: center;
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  background: var(--surface);
+  transition: background-color .3s ease, transform .3s ease, color .3s ease;
+}
+.social a:hover,
+.social a:focus-visible {
+  background: var(--accent-2);
+  color: #0a1208;
+  transform: scale(1.15);
+}
+
+/* ===== Глобальний аудіоплеєр унизу ===== */
+.player {
+  position: sticky;
+  bottom: 0;
+  z-index: 10;
+  display: grid;
+  grid-template-columns: auto 1fr minmax(240px, 420px);
+  align-items: center;
+  gap: 16px;
+  margin-inline: -20px;
+  padding: 12px 20px;
+  background: rgba(19, 32, 16, .95);
+  backdrop-filter: blur(8px);
+  border-top: 1px solid rgba(255, 255, 255, .12);
+}
+
+.player__audio { width: 100%; }
+.player__title { font-size: .95rem; }
+
+/* Анімований еквалайзер (@keyframes) */
+.player__eq { display: flex; align-items: flex-end; gap: 3px; height: 24px; }
+.player__eq span {
+  width: 5px;
+  height: 100%;
+  background: var(--accent);
+  border-radius: 2px;
+  transform-origin: bottom;
+  animation: eq 1s ease-in-out infinite;
+}
+.player__eq span:nth-child(2) { animation-delay: .2s; }
+.player__eq span:nth-child(3) { animation-delay: .4s; }
+.player__eq span:nth-child(4) { animation-delay: .6s; }
+
+@keyframes eq {
+  0%, 100% { transform: scaleY(.25); }
+  50%      { transform: scaleY(1); }
+}
+
+/* ===== Адаптивність: перебудова Grid ===== */
+@media (max-width: 800px) {
+  .page__main {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+  }
+  .cover, .info, .tracks { grid-column: 1; grid-row: auto; }
+  .cover { max-width: 380px; margin-inline: auto; }
+
+  .player { grid-template-columns: 1fr; text-align: center; }
+  .player__eq { justify-content: center; }
+  .page__footer { grid-template-columns: 1fr; }
+}
+
+/* Повага до налаштувань користувача щодо зменшення руху */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+  }
+}
+
+.social { justify-content: flex-end; }
+@media (max-width: 800px) { .social { justify-content: flex-start; } }
