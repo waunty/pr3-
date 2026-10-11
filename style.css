@@ -1,4 +1,4 @@
-/* ===== Змінні та база ===== */
+
 :root {
   --bg: #0a1208;
   --surface: #132010;
@@ -27,9 +27,7 @@ ul { list-style: none; }
   overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap;
 }
 
-/* ===== 1. ГОЛОВНА GRID-СІТКА СТОРІНКИ =====
-   Колонки: 1 гнучка. Рядки: header / main / footer / player.
-   Іменовані області (grid-template-areas) + gap. */
+
 .page {
   display: grid;
   grid-template-columns: 1fr;
@@ -51,7 +49,7 @@ ul { list-style: none; }
 .page__footer { grid-area: footer; }
 .player       { grid-area: player; }
 
-/* ===== Header ===== */
+
 .page__header {
   display: flex;
   justify-content: space-between;
@@ -81,15 +79,13 @@ ul { list-style: none; }
   border-radius: 999px;
   text-decoration: none;
   color: var(--muted);
-  /* 2. TRANSITION: плавна зміна фону та кольору */
+  
   transition: background-color .3s ease, color .3s ease;
 }
 .nav a:hover,
 .nav a:focus-visible { background: var(--surface-2); color: var(--text); }
 
-/* ===== 2. ВКЛАДЕНА GRID-СІТКА ГОЛОВНОГО БЛОКУ =====
-   Двовимірна сітка: ліворуч обкладинка + інфо, праворуч/нижче таблиця.
-   Використано grid-column / grid-row для точного позиціонування. */
+
 .page__main {
   display: grid;
   grid-template-columns: minmax(260px, 360px) 1fr;
@@ -102,7 +98,7 @@ ul { list-style: none; }
 .info   { grid-column: 2; grid-row: 1; }
 .tracks { grid-column: 2; grid-row: 2; }
 
-/* ===== Обкладинка ===== */
+
 .cover__img {
   display: block;
   width: 100%;
@@ -110,9 +106,9 @@ ul { list-style: none; }
   border-radius: var(--radius);
   border: 3px solid var(--accent);
   box-shadow: 8px 8px 0 var(--accent-2);
-  /* TRANSITION: масштаб + тінь при наведенні */
+  
   transition: transform .4s ease, box-shadow .4s ease;
-  /* ANIMATION: плавна поява */
+  
   animation: fade-in .9s ease both;
 }
 .cover__img:hover {
@@ -120,7 +116,7 @@ ul { list-style: none; }
   box-shadow: 12px 12px 0 var(--accent-2);
 }
 
-/* ===== Інформація ===== */
+
 .info { animation: fade-in .9s .15s ease both; }
 
 .info__badge {
@@ -140,7 +136,7 @@ h2 { font-size: 1.5rem; margin-bottom: 12px; }
 .info__artist { margin-top: 8px; color: var(--muted); }
 .info__text { margin: 16px 0 24px; max-width: 55ch; }
 
-/* ===== Кнопка: transition + @keyframes pulse ===== */
+
 .btn {
   display: inline-flex;
   align-items: center;
@@ -160,7 +156,7 @@ h2 { font-size: 1.5rem; margin-bottom: 12px; }
   transform: translateY(-3px) scale(1.05);
 }
 
-/* Автономна анімація пульсації */
+
 .btn--pulse { animation: pulse 2s ease-in-out infinite; }
 
 @keyframes pulse {
@@ -174,7 +170,7 @@ h2 { font-size: 1.5rem; margin-bottom: 12px; }
   to   { opacity: 1; transform: translateY(0); }
 }
 
-/* ===== Таблиця трек-листа ===== */
+
 .tracks { animation: fade-in .9s .3s ease both; }
 
 .table-wrap { overflow-x: auto; border-radius: var(--radius); }
@@ -208,7 +204,7 @@ h2 { font-size: 1.5rem; margin-bottom: 12px; }
 .tracklist tfoot th,
 .tracklist tfoot td { color: var(--muted); font-weight: 600; }
 
-/* ===== Footer ===== */
+
 .page__footer {
   display: grid;
   grid-template-columns: 1fr auto;
@@ -236,7 +232,7 @@ h2 { font-size: 1.5rem; margin-bottom: 12px; }
   transform: scale(1.15);
 }
 
-/* ===== Глобальний аудіоплеєр унизу ===== */
+
 .player {
   position: sticky;
   bottom: 0;
@@ -255,7 +251,7 @@ h2 { font-size: 1.5rem; margin-bottom: 12px; }
 .player__audio { width: 100%; }
 .player__title { font-size: .95rem; }
 
-/* Анімований еквалайзер (@keyframes) */
+
 .player__eq { display: flex; align-items: flex-end; gap: 3px; height: 24px; }
 .player__eq span {
   width: 5px;
@@ -274,7 +270,7 @@ h2 { font-size: 1.5rem; margin-bottom: 12px; }
   50%      { transform: scaleY(1); }
 }
 
-/* ===== Адаптивність: перебудова Grid ===== */
+
 @media (max-width: 800px) {
   .page__main {
     grid-template-columns: 1fr;
@@ -288,7 +284,7 @@ h2 { font-size: 1.5rem; margin-bottom: 12px; }
   .page__footer { grid-template-columns: 1fr; }
 }
 
-/* Повага до налаштувань користувача щодо зменшення руху */
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: .01ms !important;
